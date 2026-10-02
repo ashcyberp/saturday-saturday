@@ -23,21 +23,31 @@
 
     .page {
       min-height: 100vh;
-      display: flex;
+      display: none;
       align-items: center;
       justify-content: center;
       text-align: center;
       padding: 30px 20px;
     }
 
+    .page.active {
+      display: flex;
+    }
+
     .container {
       max-width: 650px;
       width: 100%;
+      margin: auto;
     }
 
     h1 {
       font-size: clamp(2.5rem, 10vw, 5rem);
       margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      margin-bottom: 25px;
     }
 
     p {
@@ -55,6 +65,7 @@
       font-weight: bold;
       margin-top: 30px;
       cursor: pointer;
+      box-shadow: 0 5px 15px rgba(255, 80, 130, 0.2);
     }
 
     button:active {
@@ -64,13 +75,57 @@
     .heart {
       font-size: 70px;
       margin-bottom: 20px;
+      animation: bounce 1.5s infinite;
+    }
+
+    @keyframes bounce {
+      50% {
+        transform: translateY(-12px);
+      }
+    }
+
+    /* PAGE 2 */
+
+    .reasons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .reason {
+      background: white;
+      padding: 25px 15px;
+      border-radius: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .reason:hover {
+      transform: translateY(-5px);
+    }
+
+    .reason span {
+      display: block;
+      font-size: 35px;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 500px) {
+      .reasons {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <section class="page">
+  <!-- PAGE 1 -->
+
+  <section class="page active" id="page1">
+
     <div class="container">
 
       <div class="heart">💗</div>
@@ -83,18 +138,149 @@
       <p>
         congratulations on surviving another day of being my boyfriend.
       </p>
-      
-      <button onclick="nextPage()">
+
+      <button onclick="showPage(2)">
         enter at your own risk 🤭
       </button>
 
     </div>
+
   </section>
-  
-<script>
-  function nextPage() {
-    alert("oh you're actually going in 😭💗");
-  }
-</script>
+
+
+  <!-- PAGE 2 -->
+
+  <section class="page" id="page2">
+
+    <div class="container">
+
+      <h2>reasons i like you 🥰</h2>
+
+      <p>
+        unfortunately for you, there are actually quite a few.
+      </p>
+
+      <div class="reasons">
+
+        <div class="reason" onclick="reasonClicked(this, 'you make me laugh 😭')">
+          <span>😭</span>
+          tap me
+        </div>
+
+        <div class="reason" onclick="reasonClicked(this, 'you actually care about me ❤️')">
+          <span>❤️</span>
+          tap me
+        </div>
+
+        <div class="reason" onclick="reasonClicked(this, 'you tolerate my nonsense 🙄')">
+          <span>🙄</span>
+          tap me
+        </div>
+
+        <div class="reason" onclick="reasonClicked(this, 'you are my favourite idiot 🧸')">
+          <span>🧸</span>
+          tap me
+        </div>
+
+        <div class="reason" onclick="reasonClicked(this, 'you make me happy 🥰')">
+          <span>🥰</span>
+          tap me
+        </div>
+
+        <div class="reason" onclick="reasonClicked(this, 'and because... duh 🤭')">
+          <span>🤭</span>
+          tap me
+        </div>
+
+      </div>
+
+      <button onclick="showPage(3)">
+        okay enough feelings →
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- PAGE 3 -->
+
+  <section class="page" id="page3">
+
+    <div class="container">
+
+      <h2>boyfriend test 🎮</h2>
+
+      <p>
+        Who is the funniest person in this relationship..
+        me? you? our teddy? why are you even asking?
+      </p>
+
+      <button onclick="quiz('wrong')">
+        Me
+      </button>
+
+      <button onclick="quiz('wrong')">
+        You
+      </button>
+
+      <button onclick="quiz('wrong')">
+        Our teddy 🧸
+      </button>
+
+      <button onclick="quiz('correct')">
+        Why are you even asking?
+      </button>
+
+      <p id="quizResult"></p>
+
+    </div>
+
+  </section>
+
+
+  <script>
+
+    function showPage(pageNumber) {
+
+      document.querySelectorAll(".page").forEach(function(page) {
+        page.classList.remove("active");
+      });
+
+      document
+        .getElementById("page" + pageNumber)
+        .classList.add("active");
+
+      window.scrollTo(0, 0);
+    }
+
+
+    function reasonClicked(card, message) {
+
+      card.innerHTML = "<span>💗</span>" + message;
+
+    }
+
+
+    function quiz(answer) {
+
+      const result = document.getElementById("quizResult");
+
+      if (answer === "correct") {
+
+        result.innerHTML =
+          "CORRECT 😭💗 you may continue being my boyfriend.";
+
+      } else {
+
+        result.innerHTML =
+          "WRONG. rethink your life choices 🙄";
+
+      }
+
+    }
+
+  </script>
+
 </body>
 </html>
